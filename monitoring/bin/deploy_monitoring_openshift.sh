@@ -15,6 +15,22 @@ if [ "$OPENSHIFT_CLUSTER" != "true" ]; then
     fi
 fi
 
+# download images and charts (they are uploaded already to MIA's S3)
+# sudo docker pull ${PUSHGATEWAY_FULL_IMAGE}
+# sudo docker save ${PUSHGATEWAY_FULL_IMAGE} -o pushgateway:${PUSHGATEWAY_TAG}.tar
+# helm repo add prometheus https://prometheus-community.github.io/helm-charts
+# helm pull prometheus/${PUSHGATEWAY_CHART_NAME} --version ${PUSHGATEWAY_CHART_VERSION}
+
+# sample upload to CR
+# aws ecr create-repository --no-cli-pager --repository-name ${PUSHGATEWAY_CHART_REPO}/${PUSHGATEWAY_CHART_NAME}
+# aws ecr create-repository --no-cli-pager --repository-name prometheus/pushgateway
+# helm registry login -u private_registry_username -p private_registry_password
+# aws ecr get-login-password --region il-central-1 | sudo docker login --username AWS --password-stdin 855334947981.dkr.ecr.il-central-1.amazonaws.com
+# helm push ${PUSHGATEWAY_CHART_NAME}-${PUSHGATEWAY_CHART_VERSION}.tgz oci://855334947981.dkr.ecr.il-central-1.amazonaws.com/${PUSHGATEWAY_CHART_REPO}
+# sudo docker tag quay.io/prometheus/pushgateway:${PUSHGATEWAY_TAG} 855334947981.dkr.ecr.il-central-1.amazonaws.com/prometheus/pushgateway:${PUSHGATEWAY_TAG}
+# sudo docker push 855334947981.dkr.ecr.il-central-1.amazonaws.com/prometheus/pushgateway:${PUSHGATEWAY_TAG}
+
+
 checkDefaultStorageClass
 
 export HELM_DEBUG="${HELM_DEBUG:-false}"
