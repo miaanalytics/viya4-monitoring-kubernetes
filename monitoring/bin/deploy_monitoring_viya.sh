@@ -27,10 +27,10 @@ if [ "$HELM_DEBUG" == "true" ]; then
     helmDebug="--debug"
 fi
 
-helmRepoAdd prometheus-community https://prometheus-community.github.io/helm-charts
+# helmRepoAdd prometheus-community https://prometheus-community.github.io/helm-charts
 
-log_info "Updating helm repositories..."
-helm repo update
+# log_info "Updating helm repositories..."
+# helm repo update
 
 PUSHGATEWAY_USER_YAML="${PUSHGATEWAY_USER_YAML:-$USER_DIR/monitoring/user-values-pushgateway.yaml}"
 if [ ! -f "$PUSHGATEWAY_USER_YAML" ]; then
